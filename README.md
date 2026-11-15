@@ -2,6 +2,8 @@
 
 **Does this README actually install? Run it in a fresh Daytona sandbox and get pointed at the exact line where it breaks — for humans and for AI agents.**
 
+What is different: it takes **any public GitHub repo URL as-is** (nothing to set up on the maintainer's side), it shows the **sandbox Python version and the repo's last commit date next to the real error** so a stale README can be told apart from an odd environment, and it gives **AI agents an MCP tool** to call before they install anything on a real machine.
+
 Built at Daytona HackSprint Tokyo (2026-11-15).
 
 ## The problem
