@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>README CHECK — baselines</title>
+<style>
+:root {
+  --ink:#111; --paper:#fff; --line:#222; --muted:#6b6b6b; --codebg:#ececec; --failbg:#c4c4c4;
+  --green:#137a2c; --red:#c8102e; --amber:#b86e00; --gray:#8a8a8a;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Hiragino Sans", "PingFang SC", "Noto Sans CJK JP", "Noto Sans CJK SC", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+  --f-title: min(96px, 5vw); --f-h2: min(72px, 3.75vw); --f-h3: min(56px, 2.92vw);
+  --f-body: min(40px, 2.08vw); --f-code: min(36px, 1.875vw); --f-band: min(32px, 1.67vw);
+  --gap: min(40px, 2.1vw); --gut: min(190px, 9.9vw);
+}
+* { box-sizing: border-box; }
+html, body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans); }
+.band { position:sticky; top:0; z-index:10; background:var(--paper); border-bottom:4px solid var(--line);
+  padding: 14px 32px; font-size:var(--f-band); }
+.band .r1, .band .r2 { display:flex; flex-wrap:wrap; align-items:center; gap: 10px 28px; }
+.band .r2 { margin-top:8px; font-weight:600; color:#333; }
+.band .r2 span + span::before { content:"|"; color:#999; margin-right:28px; }
+.brand { font-weight:900; letter-spacing:.02em; background:var(--ink); color:var(--paper); padding:4px 18px; }
+.url { font-family:var(--mono); font-weight:700; color:var(--ink); text-decoration:none;
+  border:3px solid var(--line); padding:2px 14px; border-radius:6px; overflow-wrap:anywhere; }
+.pill { font-weight:800; color:#fff; padding:4px 18px; border-radius:6px; }
+.pill.fail { background:var(--red); } .pill.pass { background:var(--green); }
+.pill.amber { background:var(--amber); } .pill.skip { background:var(--gray); }
+.okc { color:var(--green); }
+.wrap { display:grid; grid-template-columns: 65fr 33fr; gap: var(--gap); padding: 24px 32px 50vh 32px; }
+.doc { border:3px solid var(--line); padding: 16px 32px 32px 32px; min-width:0; font-size:var(--f-body); line-height:1.35; }
+.doc .title { font-size:var(--f-title); line-height:1.05; margin:8px 0 12px; font-weight:900; }
+.doc h2 { font-size:var(--f-h2); line-height:1.1; margin:28px 0 12px; font-weight:900; }
+.doc h3 { font-size:var(--f-h3); line-height:1.15; margin:24px 0 10px; font-weight:800; }
+.doc h4 { font-size:var(--f-body); margin:20px 0 8px; font-weight:800; }
+.doc p { margin: 0 0 18px; overflow-wrap:anywhere; }
+.doc p.li { padding-left:1.2em; text-indent:-1.2em; margin-bottom:10px; font-weight:600; }
+.doc p.li .mk { display:inline-block; width:1.2em; text-indent:0; }
+.doc p.quote { border-left:6px solid #999; padding-left:16px; color:#333; }
+.doc p.more { color:var(--muted); font-style:italic; margin-top:24px; }
+.doc code { font-family:var(--mono); font-size:.9em; background:var(--codebg); padding:0 .2em; }
+.code { margin: 0 0 24px; font-family:var(--mono); font-size:var(--f-code); line-height:1.3; }
+.row { display:grid; grid-template-columns: var(--gut) 1fr; background:var(--codebg); border-bottom:2px solid var(--paper); }
+.row .gut { display:flex; align-items:center; justify-content:center; background:#dcdcdc; padding:6px 4px; }
+.row .txt { padding: 8px 20px; white-space:pre-wrap; overflow-wrap:anywhere; min-width:0; }
+.row.s-skip .txt { color:var(--muted); }
+.row.failrow { background:var(--failbg); outline:5px solid var(--red); outline-offset:-5px; position:relative; z-index:2; }
+.row.failrow .txt { font-weight:800; }
+.note { display:block; font-family:var(--sans); font-size:.72em; font-weight:700; color:var(--muted); margin-top:2px; }
+.badge { font-family:var(--sans); font-weight:900; font-size:min(30px, 1.6vw); padding:4px 12px; border-radius:6px;
+  color:#fff; white-space:nowrap; line-height:1.2; }
+.b-pass { background:var(--green); font-size:min(40px, 2.1vw); }
+.b-fail { background:var(--red); font-size:min(40px, 2.1vw); }
+.b-skip { background:var(--gray); }
+.b-amber { background:var(--amber); }
+.side { position:relative; min-width:0; }
+.callout { background:var(--paper); border:6px solid var(--line); border-radius:22px; padding: 22px 28px;
+  font-size:var(--f-code); line-height:1.3; position:sticky; top:200px; }
+.callout.c-fail { border-color:var(--red); }
+.callout.c-pass { border-color:var(--green); }
+.callout.c-amber { border-color:var(--amber); }
+.callout.c-skip { border-color:var(--gray); }
+.callout.placed { position:absolute; left:0; right:0; }
+.callout .ch { font-size:min(64px, 3.3vw); font-weight:900; line-height:1.05; margin-bottom:14px; }
+.c-fail .ch { color:var(--red); } .c-pass .ch { color:var(--green); } .c-amber .ch { color:var(--amber); }
+.callout .lbl { font-weight:800; color:var(--muted); font-size:.8em; margin-top:12px; }
+.callout .reason { font-weight:800; margin:8px 0; }
+.callout .kv { font-weight:800; margin-top:14px; }
+.callout .sub { color:var(--muted); font-size:.75em; font-weight:700; margin-top:10px; }
+.callout code { font-family:var(--mono); }
+.mono { font-family:var(--mono); font-size:1em; margin:6px 0 0; white-space:pre-wrap; overflow-wrap:anywhere;
+  background:var(--codebg); padding:8px 12px; border-radius:6px; }
+.mono.err { background:#111; color:#fff; }
+.mono.ok { background:transparent; padding:2px 0; color:var(--green); font-weight:700; }
+.ptr { display:none; position:absolute; left:calc(-1 * var(--gap) - 48px); width:0; height:0;
+  border-top:26px solid transparent; border-bottom:26px solid transparent;
+  border-right: calc(var(--gap) + 48px) solid var(--red); top:40px; }
+.placed .ptr { display:block; }
+</style></head>
+<body>
+<header class="band">
+  <div class="r1"><span class="brand">README CHECK</span><a class="url" href="https://github.com/openai/baselines">https://github.com/openai/baselines</a><span class="pill fail">Run stopped at step 5 of 7</span></div>
+  <div class="r2"><span>Python 3.14.10</span><span>Last commit 2020-01-31 (6.8 years ago)</span><span>7 steps extracted</span><span>Sandbox deleted <span class="okc">&#10003;</span></span></div>
+</header>
+<main class="wrap">
+  <article class="doc">
+<p><strong>Status:</strong> Maintenance (expect bug fixes and minor updates)</p>
+<h1 class="title">Baselines</h1>
+<p>OpenAI Baselines is a set of high-quality implementations of reinforcement learning algorithms.</p>
+<p>These algorithms will make it easier for the research community to replicate, refine, and identify new ideas, and will create good baselines to build research on top of. Our DQN implementation and its variants are roughly on par with the scores in published papers. We expect they will be used as a base around which new ideas can be added, and as a tool for comparing a new approach against existing ones.</p>
+<h2>Prerequisites</h2>
+<p>Baselines requires python3 (&gt;=3.5) with the development headers. You&#x27;ll also need system packages CMake, OpenMPI and zlib. Those can be installed as follows</p>
+<h3>Ubuntu</h3>
+<div class="code"><div class="row step s-pass" data-line="16" title="line 16: passed"><span class="gut"><span class="badge b-pass">&#10003;</span></span><span class="txt">sudo apt-get update &amp;&amp; sudo apt-get install cmake libopenmpi-dev python3-dev zlib1g-dev</span></div></div>
+<h3>Mac OS X</h3>
+<p>Installation of system packages on Mac requires Homebrew. With Homebrew installed, run the following:</p>
+<div class="code"><div class="row" data-line="22"><span class="gut"></span><span class="txt">brew install cmake openmpi</span></div></div>
+<h2>Virtual environment</h2>
+<p>From the general python package sanity perspective, it is a good idea to use virtual environments (virtualenvs) to make sure packages from different projects do not interfere with each other. You can install virtualenv (which is itself a pip package) via</p>
+<div class="code"><div class="row step s-pass" data-line="28" title="line 28: passed"><span class="gut"><span class="badge b-pass">&#10003;</span></span><span class="txt">pip install virtualenv</span></div></div>
+<p>Virtualenvs are essentially folders that have copies of python executable and all python packages. To create a virtualenv called venv with python3, one runs</p>
+<div class="code"><div class="row" data-line="33"><span class="gut"></span><span class="txt">virtualenv /path/to/venv --python=python3</span></div></div>
+<p>To activate a virtualenv:</p>
+<div class="code"><div class="row" data-line="37"><span class="gut"></span><span class="txt">. /path/to/venv/bin/activate</span></div></div>
+<p>More thorough tutorial on virtualenvs and options can be found here</p>
+<h2>Tensorflow versions</h2>
+<p>The master branch supports Tensorflow from version 1.4 to 1.14. For Tensorflow 2.0 support, please use tf2 branch.</p>
+<h2>Installation</h2>
+<p class="li"><span class="mk">&bull;</span>Clone the repo and cd into it:</p>
+<div class="code"><div class="row step s-pass" data-line="48" title="line 48: passed"><span class="gut"><span class="badge b-pass">&#10003;</span></span><span class="txt">git clone https://github.com/openai/baselines.git</span></div><div class="row step s-pass" data-line="49" title="line 49: passed"><span class="gut"><span class="badge b-pass">&#10003;</span></span><span class="txt">cd baselines</span></div></div>
+<p class="li"><span class="mk">&bull;</span>If you don&#x27;t have TensorFlow installed already, install your favourite flavor of TensorFlow. In most cases, you may use</p>
+<div class="code"><div class="row" data-line="53"><span class="gut"></span><span class="txt">pip install tensorflow-gpu==1.14 # if you have a CUDA-compatible gpu and proper drivers</span></div></div>
+<p>or</p>
+<div class="code"><div class="row step s-fail failrow" id="focus" data-line="57" title="line 57: failed"><span class="gut"><span class="badge b-fail">&#10007;</span></span><span class="txt">pip install tensorflow==1.14</span></div></div>
+<p>to install Tensorflow 1.14, which is the latest version of Tensorflow supported by the master branch. Refer to TensorFlow installation guide for more details.</p>
+<p class="li"><span class="mk">&bull;</span>Install baselines package</p>
+<div class="code"><div class="row step s-skip" data-line="64" title="line 64: not run"><span class="gut"><span class="badge b-skip">SKIP</span></span><span class="txt">pip install -e .<span class="note">not run</span></span></div></div>
+<h3>MuJoCo</h3>
+<p>Some of the baselines examples use MuJoCo (multi-joint dynamics in contact) physics simulator, which is proprietary and requires binaries and a license (temporary 30-day license can be obtained from www.mujoco.org). Instructions on setting up MuJoCo can be found here</p>
+<h2>Testing the installation</h2>
+<p>All unit tests in baselines can be run using pytest runner:</p>
+<div class="code"><div class="row step s-skip" data-line="73" title="line 73: not run"><span class="gut"><span class="badge b-skip">SKIP</span></span><span class="txt">pip install pytest<span class="note">not run</span></span></div><div class="row" data-line="74"><span class="gut"></span><span class="txt">pytest</span></div></div>
+<h2>Training models</h2>
+<p>Most of the algorithms in baselines repo are used as follows:</p>
+<div class="code"><div class="row" data-line="80"><span class="gut"></span><span class="txt">python -m baselines.run --alg=&lt;name of the algorithm&gt; --env=&lt;environment_id&gt; [additional arguments]</span></div></div>
+<h3>Example 1. PPO with MuJoCo Humanoid</h3>
+<p>For instance, to train a fully-connected network controlling MuJoCo humanoid using PPO2 for 20M timesteps</p>
+<div class="code"><div class="row" data-line="85"><span class="gut"></span><span class="txt">python -m baselines.run --alg=ppo2 --env=Humanoid-v2 --network=mlp --num_timesteps=2e7</span></div></div>
+<p>Note that for mujoco environments fully-connected network is default, so we can omit <code>--network=mlp</code> The hyperparameters for both network and the learning algorithm can be controlled via the command line, for instance:</p>
+<div class="code"><div class="row" data-line="90"><span class="gut"></span><span class="txt">python -m baselines.run --alg=ppo2 --env=Humanoid-v2 --network=mlp --num_timesteps=2e7 --ent_coef=0.1 --num_hidden=32 --num_layers=3 --value_network=copy</span></div></div>
+<p>will set entropy coefficient to 0.1, and construct fully connected network with 3 layers with 32 hidden units in each, and create a separate network for value function estimation (so that its parameters are not shared with the policy network, but the structure is the same)</p>
+<p>See docstrings in common/models.py for description of network parameters for each type of model, and docstring for baselines/ppo2/ppo2.py/learn() for the description of the ppo2 hyperparameters.</p>
+<h3>Example 2. DQN on Atari</h3>
+<p>DQN with Atari is at this point a classics of benchmarks. To run the baselines implementation of DQN on Atari Pong:</p>
+<div class="code"><div class="row" data-line="100"><span class="gut"></span><span class="txt">python -m baselines.run --alg=deepq --env=PongNoFrameskip-v4 --num_timesteps=1e6</span></div></div>
+<h2>Saving, loading and visualizing models</h2>
+<h3>Saving and loading the model</h3>
+<p>The algorithms serialization API is not properly unified yet; however, there is a simple method to save / restore trained models. <code>--save_path</code> and <code>--load_path</code> command-line option loads the tensorflow state from a given path before training, and saves it after the training, respectively. Let&#x27;s imagine you&#x27;d like to train ppo2 on Atari Pong,  save the model and then later visualize what has it learnt.</p>
+<div class="code"><div class="row" data-line="110"><span class="gut"></span><span class="txt">python -m baselines.run --alg=ppo2 --env=PongNoFrameskip-v4 --num_timesteps=2e7 --save_path=~/models/pong_20M_ppo2</span></div></div>
+<p>This should get to the mean reward per episode about 20. To load and visualize the model, we&#x27;ll do the following - load the model, train it for 0 steps, and then visualize:</p>
+<div class="code"></div>
+<p class="more">&hellip; README continues (50 more lines not shown)</p>
+  </article>
+  <aside class="side" id="side"><div class="callout c-fail" id="callout"><span class="ptr"></span><div class="ch">FAILED HERE</div><div class="lbl">Step 5 &middot; README line 57</div><pre class="mono cmd">pip install tensorflow==1.14</pre><div class="lbl">Error line</div><pre class="mono err">ERROR: No matching distribution found for tensorflow==1.14</pre><div class="kv">Exit code: <b>1</b></div><div class="sub">2 later step(s) not run</div></div></aside>
+</main>
+<script>
+(function () {
+  function place() {
+    var row = document.getElementById("focus");
+    if (!row) return;
+    var side = document.getElementById("side");
+    var co = document.getElementById("callout");
+    var band = document.querySelector(".band").offsetHeight;
+    var rowTop = row.getBoundingClientRect().top + window.scrollY;
+    var rowMid = rowTop + row.offsetHeight / 2;
+    if (co) {
+      var sideTop = side.getBoundingClientRect().top + window.scrollY;
+      var ptrY = 70;
+      co.classList.add("placed");
+      co.style.top = Math.max(0, rowMid - sideTop - ptrY) + "px";
+      var ptr = co.querySelector(".ptr");
+      var coTop = sideTop + Math.max(0, rowMid - sideTop - ptrY);
+      if (ptr) ptr.style.top = (rowMid - coTop - 26 - 6) + "px";
+    }
+    var view = window.innerHeight - band;
+    var target = rowTop - band - view * 0.35;
+    if (co) {
+      var coBottom = co.getBoundingClientRect().top + window.scrollY + co.offsetHeight;
+      if (coBottom - target > window.innerHeight - 24) target = coBottom - window.innerHeight + 24;
+      if (target > rowTop - band - 24) target = rowTop - band - 24;
+    }
+    window.scrollTo(0, Math.max(0, target));
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", place); else place();
+  window.addEventListener("load", place);
+  window.addEventListener("resize", place);
+})();
+</script>
+</body></html>

@@ -1,0 +1,1 @@
+README の 57 行目 `pip install tensorflow==1.14` が失敗します。サンドボックスの Python が 3.14.10 で、このバージョンの tensorflow 1.14 には対応する配布物がなく、`No matching distribution found for tensorflow==1.14` となるためです（最後のコミットは 2020-01-31 で、以降の 64 行目 `pip install -e .` と 73 行目 `pip install pytest` は未実行でスキップされました）。
