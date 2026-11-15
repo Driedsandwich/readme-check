@@ -141,7 +141,7 @@ html, body { margin:0; background:var(--paper); color:var(--ink); font-family:va
 <div class="code"></div>
 <p class="more">&hellip; README continues (50 more lines not shown)</p>
   </article>
-  <aside class="side" id="side"><div class="callout c-fail" id="callout"><span class="ptr"></span><div class="ch">FAILED HERE</div><div class="lbl">Step 5 &middot; README line 57</div><pre class="mono cmd">pip install tensorflow==1.14</pre><div class="lbl">Error line</div><pre class="mono err">ERROR: No matching distribution found for tensorflow==1.14</pre><div class="kv">Exit code: <b>1</b></div><div class="sub">2 later step(s) not run</div></div></aside>
+  <aside class="side" id="side"><div class="callout c-fail" id="callout"><span class="ptr"></span><div class="ch">FAILED HERE</div><div class="lbl">Step 5 &middot; README line 57</div><pre class="mono cmd">pip install tensorflow==1.14</pre><div class="reason">The build failed because the required version of TensorFlow (1.14) could not be installed, likely due to it being outdated or removed. The README should recommend using the latest stable version instead.</div><div class="lbl">Error line</div><pre class="mono err">ERROR: No matching distribution found for tensorflow==1.14</pre><div class="kv">Exit code: <b>1</b></div><div class="sub">2 later step(s) not run</div></div></aside>
 </main>
 <script>
 (function () {

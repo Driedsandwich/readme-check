@@ -114,7 +114,7 @@ tr.skiprow td { color:#999 }
       <div class="tag">Real example · openai/baselines</div>
       <p style="margin-top:14px">The README (last commit 2020-01-31) asks for</p>
       <code>pip install tensorflow==1.14</code>
-      <p>TensorFlow 1.14 was only published for Python 2.7–3.7. The README was correct for 2019, but not for any sandbox you can create today.</p>
+      <p>TensorFlow 1.14 was only published for Python 2.7–3.7. The README was correct for 2019, but not in today's default sandbox (Python 3.14).</p>
     </div>
   </div>
   <div class="foot"><span>README Check</span><span>2 / 6</span></div>
@@ -157,7 +157,7 @@ tr.skiprow td { color:#999 }
       <div class="r skip">SKIP L64 pip install -e . (not run)</div>
       <div class="r skip">SKIP L73 pip install pytest (not run)</div>
       <div class="err" style="font-size:28px">ERROR: No matching distribution found for tensorflow==1.14</div>
-      <p class="why">TensorFlow 1.14 was only published for Python 2.7–3.7: right for 2019, not for a sandbox you can create today.</p>
+      <p class="why">TensorFlow 1.14 was only published for Python 2.7–3.7: right for 2019, not in today's default sandbox (Python 3.14).</p>
       <p class="ctrl"><b>Control · Textualize/rich:</b> 1 step <span class="pass"><b>✓ passed</b></span> (12.4 s), same OS / Python.</p>
     </div>
   </div>
@@ -184,7 +184,7 @@ tr.skiprow td { color:#999 }
       <ul>
         <li>The explanation model runs on a <b>Nosana GPU deployment</b> (decentralised GPU marketplace)</li>
         <li>Ollama <code>qwen2.5:3b</code> on an RTX 3060, OpenAI-compatible API</li>
-        <li>Turns the failing step into a <b>one-line human reason</b></li>
+        <li>Turns the failing step into a <b>one-line human reason</b> — verified today on an RTX 3060 Ti deployment (redeployed with a writable model store)</li>
         <li>The “why did it break” sentence does not depend on a single cloud provider</li>
         <li>If Nosana is unreachable, falls back to the raw error line</li>
       </ul>

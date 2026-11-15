@@ -117,6 +117,6 @@
   "status": "failed",
   "sandbox_deleted": true,
   "finished": "2026-11-15T15:19:16",
-  "reason": "ERROR: No matching distribution found for tensorflow==1.14",
-  "reason_by": "raw error line"
+  "reason": "The build failed because the required version of TensorFlow (1.14) could not be installed, likely due to it being outdated or removed. The README should recommend using the latest stable version instead.",
+  "reason_by": "qwen2.5:3b on Nosana"
 }

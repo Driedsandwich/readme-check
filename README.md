@@ -44,7 +44,7 @@ TensorFlow 1.14 was only published for Python 2.7–3.7, so the README worked in
 ## How Daytona and Nosana are used
 
 - **Daytona**: every check gets its own throwaway Linux machine (`daytona create` took 3.3–3.8 s wall-clock in today's runs; Git, pip, uv and passwordless sudo inside). Clone, install and fail there — never on the user's or the agent's host. Driven through the Daytona CLI (`create`, `exec --timeout`, `delete`); `daytona exec` returns the command's real exit code.
-- **Nosana**: the explanation model runs on a Nosana GPU deployment (decentralised GPU marketplace), so the "why did it break" sentence does not depend on a single cloud provider.
+- **Nosana**: the explanation model runs on a Nosana GPU deployment (decentralised GPU marketplace): Ollama `qwen2.5:3b` on an RTX 3060 Ti, called through its OpenAI-compatible `/v1/chat/completions`. Verified today on openai/baselines: it returned "The build failed because the required version of TensorFlow (1.14) could not be installed, likely due to it being outdated or removed. The README should recommend using the latest stable version instead." (about 6 s). Note: the stock Ollama template's model store was read-only, so we redeployed with `OLLAMA_MODELS=/tmp/ollama-models` and pulled the model through the API.
 
 ## Run it
 
